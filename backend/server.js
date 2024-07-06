@@ -1,22 +1,19 @@
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
-const path = require('path');
-const app = express();
-const port = 3000;
 
-app.use(bodyParser.urlencoded({ extended: true }));
+const app = express();
+const PORT = 3000;
+
+app.use(cors());
 app.use(bodyParser.json());
 
-// Servir arquivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.post('/login', (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  console.log(`Email: ${email}, Password: ${password}`);
-  res.send('Login data received.');
+    const { email, password } = req.body;
+    console.log(`Email: ${email}, Password: ${password}`);
+    res.send('Dados recebidos com sucesso!');
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
