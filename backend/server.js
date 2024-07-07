@@ -1,14 +1,16 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
 const PORT = 3000;
 
 app.use(cors());
+app.use(bodyParser.json());
 app.use(express.json());
 
-// Serve the static files from the 'google7070' directory
+// Serve the static files from the root directory (google7070)
 app.use(express.static(path.join(__dirname, '../')));
 
 app.get('/', (req, res) => {
