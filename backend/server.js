@@ -6,12 +6,13 @@ const port = 3000;
 
 // Configuração do Body Parser
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Configuração do MySQL
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'YOUR_PASSWORD',
+    password: '123reginaldo@', // substitua YOUR_PASSWORD pela sua senha do MySQL
     database: 'formulario_db'
 });
 
@@ -43,4 +44,3 @@ app.post('/submit-form', (req, res) => {
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
 });
-
