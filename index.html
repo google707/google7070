@@ -1,28 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Seguro</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
 </head>
 <body>
-    <div class="container">
-        <h2>Login</h2>
-        <form action="http://localhost:3000/submit-form" method="POST">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
-            <br>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <br>
-            <label for="mensagem">Mensagem:</label>
-            <textarea id="mensagem" name="mensagem" required></textarea>
-            <br>
-            <button type="submit">Enviar</button>
-        </form>        
-        <div id="message"></div>
-    </div>
-    <script src="script.js"></script>
+  <h2>Página de Login</h2>
+  <form id="loginForm">
+    <label for="username">Nome de Usuário:</label>
+    <input type="text" id="username" name="username" required><br><br>
+    <label for="password">Senha:</label>
+    <input type="password" id="password" name="password" required><br><br>
+    <button type="submit">Próximo</button>
+  </form>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const username = e.target.username.value;
+      const password = e.target.password.value;
+
+      const response = await fetch('/send-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
+      const result = await response.json();
+      alert(result.message);
+    });
+  </script>
 </body>
 </html>
